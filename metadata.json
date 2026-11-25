@@ -1,0 +1,6 @@
+{
+  "name": "Luis & Oliver Bienes Raíces",
+  "description": "Catálogo inmobiliario de casas, departamentos, terrenos y propiedades comerciales en San Luis Potosí.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

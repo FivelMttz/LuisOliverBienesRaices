@@ -1,0 +1,721 @@
+<!DOCTYPE html><html lang="es" class="scroll-smooth"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luis &amp; Oliver Bienes Raíces — Móvil</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config" data-stitch-original-src="7c9c60c081b18de3===../../tailwind.config.js">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#181710',
+        'on-primary': '#FFFFFF',
+        'primary-container': '#2D2B24',
+        'on-primary-container': '#F5F0E7',
+        'secondary': '#715B3E',
+        'on-secondary': '#FFFFFF',
+        'secondary-container': '#FCDEB9',
+        'on-secondary-container': '#3F2D14',
+        'tertiary': '#18161A',
+        'on-tertiary': '#FFFFFF',
+        'error': '#BA1A1A',
+        'on-error': '#FFFFFF',
+        'error-container': '#FFDAD6',
+        'on-error-container': '#93000A',
+        'background': '#FEF9F0',
+        'on-background': '#1D1C16',
+        'surface': '#FEF9F0',
+        'surface-dim': '#DED9D1',
+        'surface-bright': '#FEF9F0',
+        'surface-container-lowest': '#FFFFFF',
+        'surface-container-low': '#F8F3EA',
+        'surface-container': '#F2EDE5',
+        'surface-container-high': '#EDE8DF',
+        'surface-container-highest': '#E7E2D9',
+        'on-surface': '#1D1C16',
+        'surface-variant': '#E7E2D8',
+        'on-surface-variant': '#49473F',
+        'outline': '#7A776E',
+        'outline-variant': '#CBC6BC',
+        'inverse-surface': '#32302B',
+        'inverse-on-surface': '#F5F0E7',
+        'inverse-primary': '#CBC6BC',
+      },
+      borderRadius: {
+        'sm': '4px',
+        'DEFAULT': '8px',
+        'md': '12px',
+        'lg': '16px',
+        'xl': '24px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '56px',
+        'page-margin': '32px',
+      },
+      fontFamily: {
+        'display': ['"Mulish"', 'sans-serif'],
+        'headline': ['"Mulish"', 'sans-serif'],
+        'title': ['"Instrument Sans"', 'sans-serif'],
+        'body': ['"Instrument Sans"', 'sans-serif'],
+        'label': ['"Instrument Sans"', 'sans-serif'],
+        'mono': ['"Spline Sans Mono"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['40px', { lineHeight: '48px', letterSpacing: '-0.5px', fontWeight: '700' }],
+        'display-lg-mobile': ['30px', { lineHeight: '36px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg': ['32px', { lineHeight: '40px', letterSpacing: '-0.3px', fontWeight: '600' }],
+        'headline-md': ['24px', { lineHeight: '32px', letterSpacing: '-0.2px', fontWeight: '600' }],
+        'title-lg': ['18px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '600' }],
+        'body-lg': ['16px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-md': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0.1px', fontWeight: '600' }],
+        'label-md': ['13px', { lineHeight: '18px', letterSpacing: '0.1px', fontWeight: '500' }],
+        'label-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.2px', fontWeight: '500' }],
+        'mono-sm': ['12px', { lineHeight: '16px', letterSpacing: '0px', fontWeight: '500' }],
+      },
+      transitionDuration: {
+        'state-change': '150ms',
+        'surface-enter': '250ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'surface-enter': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'surface-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Mulish:wght@500;600;700&amp;family=Spline+Sans+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased">
+  <div id="root" class="min-h-screen"></div>
+
+  <script type="text/babel" data-stitch-original-script="c99d3a34f989f218===../../images/prop_lomas_casa.jpg|||9fcd67d3f37522d6===../../images/prop_villa_magna_depto.jpg|||38a9fc26667df16f===../../images/prop_alto_lago_terreno.jpg|||4fb583f247efb29a===../../images/prop_club_golf_casa.jpg|||956c8565db64d181===../../images/prop_lomas_tec_oficina.jpg|||37bcee4916604549===../../images/prop_zona_industrial_bodega.jpg|||2e1effd54bfdb188===../../images/prop_villa_reyes_terreno.jpg|||b4157068a42639c2===../../images/prop_himalaya_depto.jpg|||f5cf871c693f2cb3===../../images/prop_plaza_lomas_local.jpg|||879ed1cdeae0e27e===../../images/hero_terrace.jpg|||3953dfb35b238931===../../images/seller_courtyard.jpg">
+    const { useState, useMemo } = React;
+
+    const PROPERTIES = [
+      {
+        id: 1,
+        tipo: 'Casa',
+        zona: 'Lomas 4ta Sección',
+        precio: 6950000,
+        recamaras: 3,
+        banos: 3.5,
+        m2: 280,
+        imagen: 'https://lh3.googleusercontent.com/aida/ALJJyrBsgIm1G8VH5m92qQo4rsI4zXFg9ms83fnjv5oRT5D12IkqpLSUbya_0jxZd49jixe1fHNb8-Crdxh0eqtktVkOvLgjf4IdaWWCE7W78C9l9JARbwDnl0ySWKI6UEdjw8fnqApRhOLYWXYNUN0fpWH77iNVH1ESlUBbrtXyvQlyJysdSCjyxq9KEsZXhszXL9VG551Ro6d2mP8hhYLWa9blR_qUgWkgeVGRRHnieaea7whXlJZud4_eOc8',
+        alt: 'Casa en Lomas 4ta Sección, San Luis Potosí'
+      },
+      {
+        id: 2,
+        tipo: 'Departamento',
+        zona: 'Villa Magna',
+        precio: 3250000,
+        recamaras: 2,
+        banos: 2,
+        m2: 120,
+        imagen: 'https://lh3.googleusercontent.com/aida/ALJJyrB3Uk_Ez14Zt4YBob5AIP2gTaZNecKHoCsiPyqmmy1_e0AkNj8FWjwc6a8fLX0Zl4zmRVUWU2EuISOO-vKzhmshAThLVtz45W9iT1ZYOEAPUQdmUh1ku8pQjyCZ87Dtl52tf4z3dg1Wa6KuDqs2CK-8meoV90fRJIHL_QxpwiTukERXlfVKQRaWDg6oGtVGLMwApSsWD1NzvunzKoQZa3uc0ZQ7TCeg1K_Y_mcVel0uWILMzUVh-YLueGr0GEwBvqc',
+        alt: 'Departamento en Villa Magna, San Luis Potosí'
+      },
+      {
+        id: 3,
+        tipo: 'Terreno',
+        zona: 'Alto Lago',
+        precio: 1800000,
+        recamaras: null,
+        banos: null,
+        m2: 420,
+        imagen: 'https://lh3.googleusercontent.com/aida/ALJJyrAYveUZiCg9pGo7zR7BgFKOnfAlYPmp1VlIyM5NjeM09hL5Vn03DbzXWF8KHt7npiNBd3JrthqWgWnAn9sD5W9kg8nENYJgydpjI7cUFoT2Flfx1bTOWNbyNnDtI0LrBuucDh1RKI8VssBdYRb5Xen_kK2zKVFlh4cZdh98ZlEf3oK86g-Mz5dPJ3ebFxyQDS9IMZTW4oVSOOB3aCmi9f5Mrhvf0mSaqZROup8kWmDBj-OdQCqaCc3j9_TBFeZo-SoV',
+        alt: 'Terreno en Alto Lago, San Luis Potosí'
+      },
+      {
+        id: 4,
+        tipo: 'Casa',
+        zona: 'Club de Golf',
+        precio: 14500000,
+        recamaras: 4,
+        banos: 4.5,
+        m2: 520,
+        imagen: 'https://lh3.googleusercontent.com/aida/ALJJyrCN3l-OHgYW4EsqM6DQRIV3BboTSELC0bz6Q66W8JEH14qXA5Yq8Woi0vazeI5w95Cq3wCP_zNAprFfsZHro1onpXKM_3NW4L3iv_u0vLS6ZicNsdPNgsZWsHbZ_qOarDTZCHfRqf8fOuBMoNIhF54R3hCCaDD6rpdFYZ0wPJu7pK1qBxjLXTmyQqdTPoLMSxVWfUf7WRYbAtpNAKJFmFsxe3QZI6zOnZRRao2ukswfyT0hINzi-P3ResgTI6Y',
+        alt: 'Residencia en Club de Golf La Loma, San Luis Potosí'
+      },
+      {
+        id: 5,
+        tipo: 'Oficina',
+        zona: 'Lomas del Tec',
+        precio: 5200000,
+        recamaras: null,
+        banos: null,
+        m2: 180,
+        imagen: 'https://lh3.googleusercontent.com/aida/ALJJyrB5C0AgKTT8Q9PqNisq3nGnxknFXVKQE14v7QjFF6wFDYWBoRgc3iZexI0u_V8c-2YScIlyqS58kC88_LCT4G0z-Xbbc4fCXJOry6Z7NAu5aq4meKuRu-Oj0aG3yObAuexUgZxtumoIGBrw4L7V5Yt1VXc25dyDjgwLVf3T5tIn3Ufvt9c1F9DAanMDT5UGwZugMkT7ENRctIBnAlrsZCgsC6sbDQAJzQjlcN42BYL3ebVv3B6le0vQ3_WUO0jUAWKp',
+        alt: 'Oficina en Lomas del Tec, San Luis Potosí'
+      },
+      {
+        id: 6,
+        tipo: 'Bodega',
+        zona: 'Zona Industrial',
+        precio: 8750000,
+        recamaras: null,
+        banos: null,
+        m2: 1200,
+        imagen: 'https://lh3.googleusercontent.com/aida/ALJJyrAie0Ic_iOP9f7Zvh8sevkwffp4siDF5wh6PbrQQacXHwdJLplCMCjKE9YLrjTCWcyTSfOjJcXq3KxdHAeI_UWAN9y4gILILHK526SS28wzkVKBSpztn-bm1lEa52DoDjczHwLhwYnks4ezBgJefwgRQP8Jym-BF4nFcCJCzP-FCMcF6tCvul3sD0Xw2MQC_-FT-lyDf9RQKCAR8lLsINkzbRFW6Fp8cO3-Ur964kz92c5xYfm_INmD-UekPmkpUlgtXRxMQc4',
+        alt: 'Bodega en Zona Industrial, San Luis Potosí'
+      },
+      {
+        id: 7,
+        tipo: 'Terreno',
+        zona: 'Villa de Reyes',
+        precio: 1250000,
+        recamaras: null,
+        banos: null,
+        m2: 300,
+        imagen: 'https://lh3.googleusercontent.com/aida/ALJJyrDje-w3NfBppFgo27DUctP_khtftfHDO1SVAaNMovD92HJm6QjEoprOwH7BrF5kah4uu7kgDHTYo_zx1z23TGQ2oxlbFN10IUtoqS59icpusnjUDo44tvB81i1hzajoZgzYYt4sN5EfRd8GMT5zvJaOKRkT8fXaTALokiiEQHE2UC3Qas9L8_oSnYm8eKwSB6jRUMa6BF7PzQ-RzldqIC85zZfKTpJ_Aks0raIEOqcxqYBxoYavrCYUyzH07f35FjHKgXY',
+        alt: 'Terreno en Villa de Reyes, San Luis Potosí'
+      },
+      {
+        id: 8,
+        tipo: 'Departamento',
+        zona: 'Himalaya',
+        precio: 4150000,
+        recamaras: 3,
+        banos: 2,
+        m2: 145,
+        imagen: 'https://lh3.googleusercontent.com/aida/ALJJyrBHBmSp4atFKj_afOHRumPo-NKoxq9m020iWGfluE0Wf4RHYk9dpK83Tm-z8t7_OnaidfYa0qgJNT0n8hVz1FAvpvsgA9PpO5MjN9mau0c75O4c9U_xDGxNrzdCaX0MArDYWA61ieEbzLNPobYTF48eBhvilzaNGruADnV6qMkupJPDI_ertRbo8vF0fByM1-1A-K7mHY-uUSdJ2IZf1df3BvpG_CzVEi-jrenEU2oGOW-yZ0BecsAyM6NipWCD',
+        alt: 'Departamento en Himalaya, San Luis Potosí'
+      },
+      {
+        id: 9,
+        tipo: 'Local',
+        zona: 'Plaza Lomas',
+        precio: 3980000,
+        recamaras: null,
+        banos: null,
+        m2: 120,
+        imagen: 'https://lh3.googleusercontent.com/aida/ALJJyrDOsZt0M5GPvkrhe1qkv6DSjB-N4R6UlvdpJHJtkhx4EPnrXiqu5hPlrDhr-frde2qPIupl5UQirOKdMtC1JGakyibmnaEXjFVMbay52JZchHLu01Au2MuI5xLuitlJkbglKm15awX24nBZRjKIlUPGXalnBhcYRMWsqw40wYbSm69D__jQl-QxftV-S9ds3pCePz_9ZLkEKkUk0jENbiiAl-dYO4MYzBpz7o7mrRyrHuHsKXxEvjiIkjQV27NQ_rvL',
+        alt: 'Local comercial en Plaza Lomas, San Luis Potosí'
+      }
+    ];
+
+    const PRIMARY_CHIPS = [
+      { id: 'Todas', label: 'Todas', icon: 'grid_view' },
+      { id: 'Casa', label: 'Casa', icon: 'home' },
+      { id: 'Departamento', label: 'Depa', icon: 'apartment' },
+      { id: 'Terreno', label: 'Terreno', icon: 'layers' }
+    ];
+
+    const EXTRA_CHIPS = [
+      { id: 'Oficina', label: 'Oficina', icon: 'work_outline' },
+      { id: 'Local', label: 'Local', icon: 'storefront' },
+      { id: 'Bodega', label: 'Bodega', icon: 'warehouse' }
+    ];
+
+    function formatMXN(amount) {
+      return '$' + amount.toLocaleString('es-MX') + ' MXN';
+    }
+
+    function App() {
+      const [menuOpen, setMenuOpen] = useState(false);
+      const [selectedType, setSelectedType] = useState('Todas');
+      const [showExtraChips, setShowExtraChips] = useState(false);
+      const [visibleCount, setVisibleCount] = useState(3);
+      const [favorites, setFavorites] = useState({});
+      const [showSellerForm, setShowSellerForm] = useState(false);
+      const [sellerName, setSellerName] = useState('');
+      const [sellerPhone, setSellerPhone] = useState('');
+      const [sellerZona, setSellerZona] = useState('');
+      const [sellerSubmitted, setSellerSubmitted] = useState(false);
+
+      const toggleFavorite = (id) => {
+        setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
+      };
+
+      const filteredProperties = useMemo(() => {
+        if (selectedType === 'Todas') return PROPERTIES;
+        return PROPERTIES.filter((p) => p.tipo === selectedType);
+      }, [selectedType]);
+
+      const displayedProperties = filteredProperties.slice(0, visibleCount);
+      const hasMore = visibleCount < filteredProperties.length;
+
+      const handleSellerSubmit = (e) => {
+        e.preventDefault();
+        setSellerSubmitted(true);
+      };
+
+      return (
+        <div className="min-h-screen w-full max-w-[430px] mx-auto flex flex-col bg-surface text-on-surface">
+          {/* HERO + TOP NAVIGATION */}
+          <header className="relative w-full min-h-[250px] flex flex-col justify-between overflow-hidden">
+            <img
+              src="https://lh3.googleusercontent.com/aida/ALJJyrAXVWebrqQjmrLMntfhYWQzZFYOgHLEpZd68_7lvbnwAN0Wq36gbX25vzDcs00YmB92k9GjJb7kPKZcv_Ru6b7khAUhCTHOKKdznSXHIGhnLoqnmlnFTH3SfwKMFgOU8b_rolI20vv4c6S9vrr1uUMV2onwIH3-OuUOeBZIPtDtxzFBhuCNuX4M5Pxfxob8juHL-O5VXNAr1BdgpufBTsgospQ4flaR0FWKZIA_V6-eam3xN1TLXA"
+              alt="Residencia contemporánea en San Luis Potosí"
+              className="absolute inset-0 w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-primary/50"></div>
+
+            {/* Mobile Top Navbar */}
+            <nav className="relative z-20 w-full px-5 pt-5 flex items-center justify-between gap-4">
+              <a href="#" className="flex flex-col shrink-0 text-on-primary">
+                <span data-design-text-token="title-md" className="font-headline text-title-md tracking-wider uppercase text-on-primary">
+                  LUIS &amp; OLIVER
+                </span>
+                <span data-design-text-token="label-sm" className="font-body text-label-sm tracking-[0.2em] uppercase text-on-primary/90">
+                  BIENES RAÍCES
+                </span>
+              </a>
+
+              <button
+                type="button"
+                aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+                aria-expanded={menuOpen}
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="w-10 h-10 rounded-full flex items-center justify-center text-on-primary hover:bg-on-primary/10 transition-colors duration-state-change ease-state-change"
+              >
+                <span className="material-symbols-outlined text-headline-md" aria-hidden="true">
+                  {menuOpen ? 'close' : 'menu'}
+                </span>
+              </button>
+            </nav>
+
+            {/* Collapsible Mobile Menu */}
+            {menuOpen && (
+              <div className="relative z-20 mx-5 mt-2 rounded-lg bg-surface-container-lowest border border-outline-variant p-3 flex flex-col gap-1">
+                <a
+                  href="#propiedades"
+                  onClick={() => setMenuOpen(false)}
+                  className="px-3 py-2 rounded-md text-label-lg text-on-surface hover:bg-surface-container-low"
+                >
+                  <span data-design-text-token="label-lg">Propiedades destacadas</span>
+                </a>
+                <a
+                  href="#vender"
+                  onClick={() => setMenuOpen(false)}
+                  className="px-3 py-2 rounded-md text-label-lg text-on-surface hover:bg-surface-container-low"
+                >
+                  <span data-design-text-token="label-lg">Quiero vender mi propiedad</span>
+                </a>
+                <a
+                  href="#contacto"
+                  onClick={() => setMenuOpen(false)}
+                  className="px-3 py-2 rounded-md text-label-lg text-on-surface hover:bg-surface-container-low"
+                >
+                  <span data-design-text-token="label-lg">Contáctanos</span>
+                </a>
+              </div>
+            )}
+
+            {/* Hero Title & Split CTAs */}
+            <div className="relative z-10 px-5 pt-4 pb-6 flex flex-col items-center gap-4 text-center">
+              <h1 data-design-text-token="display-lg-mobile" className="font-headline text-display-lg-mobile text-on-primary text-balance">
+                Encuentra tu próxima propiedad
+              </h1>
+
+              <div className="w-full grid grid-cols-2 gap-3">
+                <a
+                  href="#propiedades"
+                  data-component-id="button-mobile-buy"
+                  data-component-type="button"
+                  data-component-variant="secondary"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-surface-container-lowest text-on-surface px-3 py-3 transition-colors duration-state-change ease-state-change hover:bg-surface-container-low"
+                >
+                  <span className="material-symbols-outlined text-title-md" aria-hidden="true">home</span>
+                  <span data-design-text-token="label-lg" className="font-body text-label-lg">Quiero comprar</span>
+                </a>
+                <a
+                  href="#vender"
+                  data-component-id="button-mobile-sell"
+                  data-component-type="button"
+                  data-component-variant="primary"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-container/85 border border-on-primary/60 text-on-primary px-3 py-3 transition-colors duration-state-change ease-state-change hover:bg-primary-container"
+                >
+                  <span className="material-symbols-outlined text-title-md" aria-hidden="true">sell</span>
+                  <span data-design-text-token="label-lg" className="font-body text-label-lg">Quiero vender</span>
+                </a>
+              </div>
+            </div>
+          </header>
+
+          {/* MAIN CONTENT */}
+          <main className="flex-1 px-4 py-5 flex flex-col gap-6">
+            {/* PROPIEDADES DESTACADAS */}
+            <section id="propiedades" className="flex flex-col gap-3.5">
+              <div className="flex items-center justify-between gap-2">
+                <h2 data-design-text-token="headline-md" className="font-headline text-headline-md text-on-surface">
+                  Propiedades destacadas
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedType('Todas');
+                    setVisibleCount(PROPERTIES.length);
+                  }}
+                  className="inline-flex items-center gap-1 text-label-md text-on-surface hover:text-secondary shrink-0"
+                >
+                  <span data-design-text-token="label-md">Ver todas</span>
+                  <span className="material-symbols-outlined text-title-md" aria-hidden="true">arrow_forward</span>
+                </button>
+              </div>
+
+              {/* Filter Chips */}
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5">
+                  {PRIMARY_CHIPS.map((chip) => {
+                    const isActive = selectedType === chip.id;
+                    return (
+                      <button
+                        key={chip.id}
+                        data-component-id={`chip-mobile-${chip.id.toLowerCase()}`}
+                        data-component-type="chip"
+                        data-component-variant="filter"
+                        type="button"
+                        aria-pressed={isActive}
+                        onClick={() => {
+                          setSelectedType(chip.id);
+                          setVisibleCount(3);
+                        }}
+                        className={`shrink-0 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 transition-colors duration-state-change ease-state-change ${
+                          isActive
+                            ? 'border-primary-container bg-primary-container text-on-primary-container'
+                            : 'border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-low'
+                        }`}
+                      >
+                        <span className="material-symbols-outlined text-body-lg" aria-hidden="true">{chip.icon}</span>
+                        <span data-design-text-token="label-md" className="font-body text-label-md">{chip.label}</span>
+                      </button>
+                    );
+                  })}
+
+                  <button
+                    type="button"
+                    aria-label="Más tipos de propiedad"
+                    aria-expanded={showExtraChips}
+                    onClick={() => setShowExtraChips(!showExtraChips)}
+                    className="shrink-0 w-8 h-8 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface flex items-center justify-center hover:bg-surface-container-low"
+                  >
+                    <span className="material-symbols-outlined text-title-md" aria-hidden="true">
+                      {showExtraChips ? 'expand_less' : 'expand_more'}
+                    </span>
+                  </button>
+                </div>
+
+                {showExtraChips && (
+                  <div className="flex flex-wrap items-center gap-2">
+                    {EXTRA_CHIPS.map((chip) => {
+                      const isActive = selectedType === chip.id;
+                      return (
+                        <button
+                          key={chip.id}
+                          type="button"
+                          aria-pressed={isActive}
+                          onClick={() => {
+                            setSelectedType(chip.id);
+                            setVisibleCount(3);
+                          }}
+                          className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 transition-colors duration-state-change ease-state-change ${
+                            isActive
+                              ? 'border-primary-container bg-primary-container text-on-primary-container'
+                              : 'border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-low'
+                          }`}
+                        >
+                          <span className="material-symbols-outlined text-body-lg" aria-hidden="true">{chip.icon}</span>
+                          <span data-design-text-token="label-md" className="font-body text-label-md">{chip.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Horizontal Property Cards */}
+              <div className="flex flex-col gap-3">
+                {displayedProperties.map((prop) => {
+                  const isFav = !!favorites[prop.id];
+                  return (
+                    <article
+                      key={prop.id}
+                      data-component-id={`card-mobile-property-${prop.id}`}
+                      data-component-type="card"
+                      data-component-variant="elevated"
+                      className="bg-surface-container-lowest rounded-lg border border-outline-variant/60 overflow-hidden flex items-stretch gap-3 p-2"
+                    >
+                      <div className="relative w-[124px] min-h-[104px] shrink-0 rounded-md overflow-hidden bg-surface-container-high">
+                        <img
+                          src={prop.imagen}
+                          alt={prop.alt}
+                          className="w-full h-full object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => toggleFavorite(prop.id)}
+                          aria-label={isFav ? `Quitar ${prop.zona} de favoritos` : `Guardar ${prop.zona} en favoritos`}
+                          className="absolute top-2 right-2 w-7 h-7 rounded-full bg-primary/45 text-on-primary flex items-center justify-center"
+                        >
+                          <span
+                            className="material-symbols-outlined text-body-lg"
+                            style={isFav ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                            aria-hidden="true"
+                          >
+                            favorite
+                          </span>
+                        </button>
+                      </div>
+
+                      <div className="flex-1 min-w-0 py-1 flex flex-col justify-between gap-1.5">
+                        <div className="flex flex-col gap-1">
+                          <span className="self-start rounded-full bg-surface-container-low border border-outline-variant/50 px-2.5 py-0.5">
+                            <span data-design-text-token="label-sm" className="font-body text-label-sm text-on-surface-variant">{prop.tipo}</span>
+                          </span>
+                          <h3 data-design-text-token="title-md" className="font-body text-title-md text-on-surface">
+                            {prop.zona}
+                          </h3>
+                          <p data-design-text-token="body-md" className="font-body text-body-md text-on-surface tabular-nums">
+                            {formatMXN(prop.precio)}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-3 text-on-surface-variant">
+                          {prop.recamaras !== null && (
+                            <span className="inline-flex items-center gap-1">
+                              <span className="material-symbols-outlined text-body-md" aria-hidden="true">bed</span>
+                              <span data-design-text-token="label-sm" className="font-body text-label-sm tabular-nums">{prop.recamaras}</span>
+                            </span>
+                          )}
+                          {prop.banos !== null && (
+                            <span className="inline-flex items-center gap-1">
+                              <span className="material-symbols-outlined text-body-md" aria-hidden="true">bathtub</span>
+                              <span data-design-text-token="label-sm" className="font-body text-label-sm tabular-nums">{prop.banos}</span>
+                            </span>
+                          )}
+                          <span className="inline-flex items-center gap-1">
+                            <span className="material-symbols-outlined text-body-md" aria-hidden="true">square_foot</span>
+                            <span data-design-text-token="label-sm" className="font-body text-label-sm tabular-nums">{prop.m2} m²</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center pr-1">
+                        <button
+                          type="button"
+                          aria-label={`Ver detalle de ${prop.zona}`}
+                          className="w-8 h-8 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface flex items-center justify-center hover:bg-surface-container-low"
+                        >
+                          <span className="material-symbols-outlined text-title-md" aria-hidden="true">arrow_forward</span>
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+
+              {hasMore && (
+                <div className="flex justify-center pt-1">
+                  <button
+                    data-component-id="button-mobile-ver-mas"
+                    data-component-type="button"
+                    data-component-variant="with-icon"
+                    type="button"
+                    onClick={() => setVisibleCount((prev) => prev + 3)}
+                    className="w-full max-w-[260px] inline-flex items-center justify-center gap-2 rounded-md bg-surface-container-lowest text-on-surface border border-outline-variant px-6 py-2.5 hover:bg-surface-container-low"
+                  >
+                    <span data-design-text-token="label-lg" className="font-body text-label-lg">Ver más propiedades</span>
+                    <span className="material-symbols-outlined text-title-md" aria-hidden="true">expand_more</span>
+                  </button>
+                </div>
+              )}
+            </section>
+
+            {/* QUIERO VENDER MI PROPIEDAD BANNER */}
+            <section id="vender" className="flex flex-col gap-3">
+              <div className="relative rounded-xl overflow-hidden border border-outline-variant/60 min-h-[156px] p-5 flex items-center justify-between gap-4">
+                <img
+                  src="https://lh3.googleusercontent.com/aida/ALJJyrAkWjKoKdUCGM7kTXUCirwiy8lhe5560RffnNJYa2SqALbxtu-AGGxcyVOxmrASHyERw1AhXs50ZV84YXngC6YIqR8GGyOtpYTlXNnd5YuBgnwCV004eEulbyavM7kPzPdxyTTH0-IWHEMmW1KXhS-iAFtYAQfwCu6V-5GQ2BYIVVD8ggRoaAxP96UAyQwVLXY_J7s9T-Qfds-2mUQP40ZzFaNUlbvG5hPcvVDOecwOwNbwkyPBPh8HM3cH"
+                  alt="Residencia de cantera en San Luis Potosí"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/70 to-primary/45"></div>
+
+                <div className="relative z-10 flex flex-col gap-1.5 max-w-[190px]">
+                  <h2 data-design-text-token="headline-md" className="font-headline text-headline-md text-on-primary text-balance">
+                    Quiero vender mi propiedad
+                  </h2>
+                  <p data-design-text-token="label-sm" className="font-body text-label-sm text-on-primary/90 text-pretty">
+                    Déjanos tus datos y te contactamos a la brevedad.
+                  </p>
+                </div>
+
+                <button
+                  data-component-id="button-mobile-iniciar-registro"
+                  data-component-type="button"
+                  data-component-variant="secondary"
+                  type="button"
+                  onClick={() => setShowSellerForm(!showSellerForm)}
+                  className="relative z-10 shrink-0 inline-flex items-center gap-1.5 rounded-md bg-surface-container-lowest text-on-surface px-3.5 py-2.5 hover:bg-surface-container-low"
+                >
+                  <span className="material-symbols-outlined text-title-md" aria-hidden="true">sell</span>
+                  <span data-design-text-token="label-md" className="font-body text-label-md">Iniciar registro</span>
+                  <span className="material-symbols-outlined text-title-md" aria-hidden="true">arrow_forward</span>
+                </button>
+              </div>
+
+              {showSellerForm && (
+                <form
+                  onSubmit={handleSellerSubmit}
+                  className="bg-surface-container-lowest rounded-lg border border-outline-variant p-4 flex flex-col gap-3"
+                >
+                  {sellerSubmitted ? (
+                    <p data-design-text-token="body-md" className="font-body text-body-md text-on-surface text-center py-2">
+                      Registro enviado. Un asesor en San Luis Potosí se pondrá en contacto contigo.
+                    </p>
+                  ) : (
+                    <>
+                      <label className="flex flex-col gap-1">
+                        <span data-design-text-token="label-sm" className="font-body text-label-sm text-on-surface">Nombre</span>
+                        <input
+                          type="text"
+                          required
+                          value={sellerName}
+                          onChange={(e) => setSellerName(e.target.value)}
+                          placeholder="Tu nombre"
+                          className="w-full rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-body-md text-on-surface placeholder:text-outline focus:border-secondary focus:outline-none"
+                        />
+                      </label>
+                      <label className="flex flex-col gap-1">
+                        <span data-design-text-token="label-sm" className="font-body text-label-sm text-on-surface">Teléfono</span>
+                        <input
+                          type="tel"
+                          inputMode="numeric"
+                          required
+                          value={sellerPhone}
+                          onChange={(e) => setSellerPhone(e.target.value)}
+                          placeholder="444 000 0000"
+                          className="w-full rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-body-md text-on-surface placeholder:text-outline focus:border-secondary focus:outline-none"
+                        />
+                      </label>
+                      <label className="flex flex-col gap-1">
+                        <span data-design-text-token="label-sm" className="font-body text-label-sm text-on-surface">Zona en San Luis Potosí</span>
+                        <input
+                          type="text"
+                          required
+                          value={sellerZona}
+                          onChange={(e) => setSellerZona(e.target.value)}
+                          placeholder="Ej. Lomas, Tangamanga, Himalaya..."
+                          className="w-full rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-body-md text-on-surface placeholder:text-outline focus:border-secondary focus:outline-none"
+                        />
+                      </label>
+                      <button
+                        type="submit"
+                        className="w-full rounded-md bg-primary-container text-on-primary-container py-2.5 text-label-lg"
+                      >
+                        Enviar información
+                      </button>
+                    </>
+                  )}
+                </form>
+              )}
+            </section>
+
+            {/* CONTÁCTANOS */}
+            <section id="contacto" className="flex flex-col gap-3 pb-4">
+              <div className="flex flex-col gap-0.5">
+                <h2 data-design-text-token="headline-md" className="font-headline text-headline-md text-on-surface">
+                  Contáctanos
+                </h2>
+                <p data-design-text-token="body-md" className="font-body text-body-md text-on-surface-variant">
+                  Resuelve tus dudas y recibe asesoría personalizada.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-4 gap-2 items-stretch">
+                <a
+                  href="#whatsapp"
+                  data-component-id="card-mobile-whatsapp"
+                  data-component-type="card"
+                  data-component-variant="interactive"
+                  className="h-full bg-surface-container-lowest border border-outline-variant rounded-md py-3 px-1 flex flex-col items-center justify-center gap-1.5 hover:bg-surface-container-low"
+                >
+                  <span className="material-symbols-outlined text-headline-md text-on-surface" aria-hidden="true">chat</span>
+                  <span data-design-text-token="label-sm" className="font-body text-label-sm text-on-surface">WhatsApp</span>
+                </a>
+
+                <a
+                  href="tel:+524441234567"
+                  data-component-id="card-mobile-phone"
+                  data-component-type="card"
+                  data-component-variant="interactive"
+                  className="h-full bg-surface-container-lowest border border-outline-variant rounded-md py-3 px-1 flex flex-col items-center justify-center gap-1.5 hover:bg-surface-container-low"
+                >
+                  <span className="material-symbols-outlined text-headline-md text-on-surface" aria-hidden="true">call</span>
+                  <span data-design-text-token="label-sm" className="font-body text-label-sm text-on-surface">Llamar</span>
+                </a>
+
+                <a
+                  href="mailto:contacto@luisoliver.mx"
+                  data-component-id="card-mobile-email"
+                  data-component-type="card"
+                  data-component-variant="interactive"
+                  className="h-full bg-surface-container-lowest border border-outline-variant rounded-md py-3 px-1 flex flex-col items-center justify-center gap-1.5 hover:bg-surface-container-low"
+                >
+                  <span className="material-symbols-outlined text-headline-md text-on-surface" aria-hidden="true">mail</span>
+                  <span data-design-text-token="label-sm" className="font-body text-label-sm text-on-surface">Correo</span>
+                </a>
+
+                <a
+                  href="#ubicacion"
+                  data-component-id="card-mobile-location"
+                  data-component-type="card"
+                  data-component-variant="interactive"
+                  className="h-full bg-surface-container-lowest border border-outline-variant rounded-md py-3 px-1 flex flex-col items-center justify-center gap-1.5 hover:bg-surface-container-low"
+                >
+                  <span className="material-symbols-outlined text-headline-md text-on-surface" aria-hidden="true">location_on</span>
+                  <span data-design-text-token="label-sm" className="font-body text-label-sm text-on-surface">Ubicación</span>
+                </a>
+              </div>
+            </section>
+          </main>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+
+
+</body></html>
