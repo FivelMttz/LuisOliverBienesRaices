@@ -23,6 +23,7 @@ interface CatalogViewProps {
   onGoSell: () => void;
   onGoContact: () => void;
   onOpenContactModal: (mode: ContactModalMode, folio?: string) => void;
+  focusedPropertyId?: string | null;
 }
 
 const ALL_TYPES: PropertyType[] = [
@@ -47,13 +48,27 @@ export function CatalogView({
   onGoSell,
   onGoContact,
   onOpenContactModal,
+  focusedPropertyId = null,
 }: CatalogViewProps) {
   const { publicProperties, favorites, toggleFavorite, trackEvent } = usePlatform();
 
   const [showMap, setShowMap] = useState(true);
-  const [selectedMapPropertyId, setSelectedMapPropertyId] = useState<string | null>(null);
+  const [selectedMapPropertyId, setSelectedMapPropertyId] = useState<string | null>(
+    focusedPropertyId,
+  );
   const [mapBoundIds, setMapBoundIds] = useState<Set<string> | null>(null);
   const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
+
+  useEffect(() => {
+    if (!focusedPropertyId) return;
+    setSelectedMapPropertyId(focusedPropertyId);
+    const timer = setTimeout(() => {
+      document
+        .getElementById(`property-card-${focusedPropertyId}`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [focusedPropertyId]);
 
   const availableZones = useMemo(
     () => Array.from(new Set(publicProperties.map((p) => p.zonaPublica))).sort(),

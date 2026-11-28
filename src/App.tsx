@@ -67,6 +67,16 @@ function getViewFromHash(): AppView {
   return 'landing';
 }
 
+function getSharedPropertyRefFromHash(): string | null {
+  if (typeof window === 'undefined') return null;
+  const hash = window.location.hash;
+  const qIndex = hash.indexOf('?');
+  if (qIndex === -1) return null;
+  const params = new URLSearchParams(hash.slice(qIndex + 1));
+  const ref = params.get('propiedad')?.trim();
+  return ref || null;
+}
+
 export default function App() {
   const { publicProperties, config, favorites, toggleFavorite, trackEvent, gmpQuotaExceeded } =
     usePlatform();
@@ -101,19 +111,34 @@ export default function App() {
   );
   const [showMobileSellerForm, setShowMobileSellerForm] = useState(false);
 
+  const initialSharedProp = useMemo(() => {
+    const ref = getSharedPropertyRefFromHash();
+    if (!ref) return null;
+    return publicProperties.find((p) => p.folio === ref || p.id === ref) ?? null;
+  }, []);
+
   // Catalog state
-  const [catalogFilters, setCatalogFilters] = useState<CatalogFilters>(
-    initialSnapshot?.filters ?? DEFAULT_CATALOG_FILTERS,
+  const [catalogFilters, setCatalogFilters] = useState<CatalogFilters>(() =>
+    initialSharedProp
+      ? DEFAULT_CATALOG_FILTERS
+      : (initialSnapshot?.filters ?? DEFAULT_CATALOG_FILTERS),
   );
   const [catalogVisibleCount, setCatalogVisibleCount] = useState<number>(
     initialSnapshot?.catalogVisibleCount ?? 12,
+  );
+  const [focusedPropertyId, setFocusedPropertyId] = useState<string | null>(
+    initialSharedProp?.id ?? null,
   );
 
   // Shared expanded property IDs (REQ-CAT-002 & REQ-NAV-002)
   const [expandedIds, setExpandedIds] = useState<string[]>(() => {
     const saved = initialSnapshot?.expandedIds ?? [];
     const availableSet = new Set(publicProperties.map((p) => p.id));
-    return saved.filter((id) => availableSet.has(id));
+    const filtered = saved.filter((id) => availableSet.has(id));
+    if (initialSharedProp && !filtered.includes(initialSharedProp.id)) {
+      return [initialSharedProp.id, ...filtered];
+    }
+    return filtered;
   });
 
   // Sticky compact desktop landing header (REQ-NAV-001)
@@ -131,14 +156,25 @@ export default function App() {
     expandedIdsRef.current = expandedIds;
   }, [expandedIds]);
 
-  // Sync hash changes
+  // Sync hash changes & shared property deep links
   useEffect(() => {
     const handleHashChange = () => {
       setView(getViewFromHash());
+      const ref = getSharedPropertyRefFromHash();
+      if (ref) {
+        const match = publicProperties.find((p) => p.folio === ref || p.id === ref);
+        if (match) {
+          setCatalogFilters(DEFAULT_CATALOG_FILTERS);
+          setFocusedPropertyId(match.id);
+          setExpandedIds((prev) => (prev.includes(match.id) ? prev : [match.id, ...prev]));
+        }
+      } else {
+        setFocusedPropertyId(null);
+      }
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [publicProperties]);
 
   // Track site_visit when entering landing or catalogo (REQ-ANA-001)
   useEffect(() => {
@@ -227,11 +263,14 @@ export default function App() {
     setView(nextView);
     setMobileMenuOpen(false);
     if (nextView === 'landing') {
+      setFocusedPropertyId(null);
       window.location.hash = '#/';
     } else if (nextView === 'catalogo') {
+      setFocusedPropertyId(null);
       window.location.hash = '#/catalogo';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
+      setFocusedPropertyId(null);
       window.location.hash = '#/admin';
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
@@ -395,6 +434,7 @@ export default function App() {
           onGoSell={handleSellCtaClick}
           onGoContact={() => navigateTo('landing', 'contacto')}
           onOpenContactModal={handleOpenContactModal}
+          focusedPropertyId={focusedPropertyId}
         />
         <footer className="border-t border-outline-variant/60 bg-surface-container-low">
           <div className="max-w-6xl mx-auto px-4 md:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-label-sm text-on-surface-variant">

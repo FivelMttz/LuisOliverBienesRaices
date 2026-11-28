@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState, useEffect, useRef, MouseEvent } from 'react';
 import { PublicProperty, formatMXN } from '../types/domain';
 import { OFFICIAL_CONTACTS } from '../data/seedData';
 import { PropertyImage } from './PropertyImage';
@@ -28,6 +28,28 @@ export function PublicPropertyCard({
 }: PublicPropertyCardProps) {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [heartAnimating, setHeartAnimating] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const cardRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!shareOpen) return;
+    const handleOutside = (ev: globalThis.MouseEvent) => {
+      if (cardRef.current && !cardRef.current.contains(ev.target as Node)) {
+        setShareOpen(false);
+      }
+    };
+    const handleEsc = (ev: KeyboardEvent) => {
+      if (ev.key === 'Escape') setShareOpen(false);
+    };
+    document.addEventListener('mousedown', handleOutside);
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      document.removeEventListener('mousedown', handleOutside);
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [shareOpen]);
 
   const photos = property.fotos.length > 0 ? property.fotos : [];
   const safeIndex = photoIndex < photos.length ? photoIndex : 0;
@@ -56,6 +78,12 @@ export function PublicPropertyCard({
     onToggleFavorite(property.id, property.folio);
   };
 
+  const buildDirectLink = () => {
+    const hashPath = `#/catalogo?propiedad=${encodeURIComponent(property.folio)}`;
+    if (typeof window === 'undefined') return hashPath;
+    return `${window.location.origin}${window.location.pathname}${hashPath}`;
+  };
+
   const buildWhatsAppHref = () => {
     const priceText =
       property.operacion === 'Renta'
@@ -64,6 +92,113 @@ export function PublicPropertyCard({
     const msg = `Hola, quisiera obtener más información sobre ${property.titulo}, ${priceText}. Folio: ${property.folio}`;
     return `https://wa.me/${OFFICIAL_CONTACTS.phoneDigits}?text=${encodeURIComponent(msg)}`;
   };
+
+  const buildShareWhatsAppHref = () => {
+    const msg = `Mira esta propiedad en ${property.zonaPublica}, San Luis Potosí: ${property.titulo} (${formatMXN(property.precio, property.operacion)}) ${buildDirectLink()}`;
+    return `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  };
+
+  const handleCopyLink = async (e: MouseEvent) => {
+    e.stopPropagation();
+    const url = buildDirectLink();
+    let copiedOk = false;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(url);
+        copiedOk = true;
+      }
+    } catch {
+      copiedOk = false;
+    }
+
+    if (!copiedOk) {
+      try {
+        const textarea = document.createElement('textarea');
+        textarea.value = url;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        copiedOk = document.execCommand('copy');
+        document.body.removeChild(textarea);
+      } catch {
+        copiedOk = false;
+      }
+    }
+
+    if (copiedOk) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    }
+  };
+
+  const renderShareControl = (compact = false) => (
+    <div className="relative inline-flex" onClick={(e) => e.stopPropagation()}>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setShareOpen((prev) => !prev);
+        }}
+        aria-expanded={shareOpen}
+        aria-label={`Compartir ${property.titulo}`}
+        className={`inline-flex items-center gap-1 rounded-md border border-outline-variant/80 bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors whitespace-nowrap ${
+          compact ? 'px-2 py-1 text-[11px] font-medium' : 'px-2.5 py-1 text-label-sm font-medium'
+        }`}
+      >
+        <span className="material-symbols-outlined text-body-md" aria-hidden="true">
+          share
+        </span>
+        <span>Compartir</span>
+      </button>
+
+      {shareOpen && (
+        <div
+          role="menu"
+          aria-label="Opciones para compartir"
+          className="absolute right-0 top-full mt-1.5 z-30 w-52 rounded-xl border border-outline-variant bg-surface-container-lowest shadow-lg p-1.5 flex flex-col gap-1"
+        >
+          <button
+            type="button"
+            role="menuitem"
+            onClick={handleCopyLink}
+            className="w-full flex items-center gap-2 rounded-lg px-2.5 py-2 text-left text-label-md text-on-surface hover:bg-surface-container-low transition-colors"
+          >
+            <span
+              className={`material-symbols-outlined text-body-lg ${
+                copied ? 'text-emerald-700' : 'text-primary'
+              }`}
+              aria-hidden="true"
+            >
+              {copied ? 'check' : 'content_copy'}
+            </span>
+            <span className={copied ? 'text-emerald-800 font-semibold' : ''}>
+              {copied ? '¡Enlace copiado!' : 'Copiar enlace'}
+            </span>
+          </button>
+
+          <a
+            role="menuitem"
+            href={buildShareWhatsAppHref()}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShareOpen(false);
+            }}
+            className="w-full flex items-center gap-2 rounded-lg px-2.5 py-2 text-left text-label-md text-on-surface hover:bg-surface-container-low transition-colors"
+          >
+            <span className="material-symbols-outlined text-body-lg text-emerald-700" aria-hidden="true">
+              chat
+            </span>
+            <span>Enviar por WhatsApp</span>
+          </a>
+        </div>
+      )}
+    </div>
+  );
 
   const renderAttributes = (compactMobile = false) => {
     const items: { icon: string; text: string; title: string }[] = [];
@@ -125,10 +260,11 @@ export function PublicPropertyCard({
 
   return (
     <article
+      ref={cardRef}
       id={`property-card-${property.id}`}
       data-folio={property.folio}
       onClick={() => onToggleExpand(property.id)}
-      className={`group cursor-pointer bg-surface-container-lowest rounded-xl border overflow-hidden transition-all duration-150 ${
+      className={`group relative cursor-pointer bg-surface-container-lowest rounded-xl border transition-all duration-150 ${
         isHighlighted
           ? 'border-red-700 ring-2 ring-red-700/25 shadow-md'
           : isExpanded
@@ -139,7 +275,7 @@ export function PublicPropertyCard({
       {/* Top Card Layout: Horizontal on mobile, Vertical on md+ */}
       <div className="flex items-stretch gap-2.5 min-[380px]:gap-3 p-2 md:flex-col md:p-0 md:gap-0">
         {/* Image Container with Gallery Controls & Heart */}
-        <div className="relative w-[104px] min-[380px]:w-[120px] sm:w-[124px] min-h-[108px] shrink-0 rounded-md overflow-hidden bg-surface-container-high md:w-full md:aspect-[16/10] md:rounded-none">
+        <div className="relative w-[104px] min-[380px]:w-[120px] sm:w-[124px] min-h-[108px] shrink-0 rounded-md overflow-hidden bg-surface-container-high md:w-full md:aspect-[16/10] md:rounded-none md:rounded-t-[11px]">
           <PropertyImage
             src={activePhoto?.url ?? ''}
             alt={`${property.tipo} en ${property.zonaPublica}, San Luis Potosí`}
@@ -251,7 +387,10 @@ export function PublicPropertyCard({
               {formatMXN(property.precio, property.operacion)}
             </p>
           </div>
-          {renderAttributes(true)}
+          <div className="flex flex-wrap items-center justify-between gap-1.5">
+            {renderAttributes(true)}
+            {renderShareControl(true)}
+          </div>
         </div>
 
         {/* Mobile Expand Toggle Button */}
@@ -273,25 +412,34 @@ export function PublicPropertyCard({
         </div>
 
         {/* Desktop Footer (md+) */}
-        <div className="hidden md:flex items-end justify-between gap-3 p-4 min-h-[98px]">
-          <div className="min-w-0 flex flex-col gap-1">
-            <h3 className="font-body text-title-md font-semibold text-on-surface truncate">
-              {property.titulo}
-            </h3>
-            <p className="inline-flex items-center gap-1 text-label-sm text-on-surface-variant truncate">
-              <span
-                className="material-symbols-outlined text-body-md text-red-700 shrink-0"
-                aria-hidden="true"
-              >
-                location_on
-              </span>
-              <span className="truncate">{property.zonaPublica}</span>
-            </p>
-            <p className="font-body text-body-md font-semibold text-emerald-800 tabular-nums">
-              {formatMXN(property.precio, property.operacion)}
-            </p>
+        <div className="hidden md:flex flex-col gap-2.5 p-4">
+          <div className="flex items-end justify-between gap-3 min-h-[76px]">
+            <div className="min-w-0 flex flex-col gap-1">
+              <h3 className="font-body text-title-md font-semibold text-on-surface truncate">
+                {property.titulo}
+              </h3>
+              <p className="inline-flex items-center gap-1 text-label-sm text-on-surface-variant truncate">
+                <span
+                  className="material-symbols-outlined text-body-md text-red-700 shrink-0"
+                  aria-hidden="true"
+                >
+                  location_on
+                </span>
+                <span className="truncate">{property.zonaPublica}</span>
+              </p>
+              <p className="font-body text-body-md font-semibold text-emerald-800 tabular-nums">
+                {formatMXN(property.precio, property.operacion)}
+              </p>
+            </div>
+            {renderAttributes(false)}
           </div>
-          {renderAttributes(false)}
+
+          <div className="flex items-center justify-between gap-2 pt-2 border-t border-outline-variant/40">
+            <span className="font-mono text-[11px] text-on-surface-variant">
+              {property.folio}
+            </span>
+            {renderShareControl(false)}
+          </div>
         </div>
       </div>
 
@@ -299,7 +447,7 @@ export function PublicPropertyCard({
       {isExpanded && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="border-t border-outline-variant/60 bg-surface-container-low/65 p-4 flex flex-col gap-3 cursor-default"
+          className="border-t border-outline-variant/60 bg-surface-container-low/65 rounded-b-[11px] p-4 flex flex-col gap-3 cursor-default"
         >
           <div className="flex items-center justify-between gap-2 text-label-sm text-on-surface-variant">
             <span className="font-mono text-mono-sm text-on-surface">{property.folio}</span>
