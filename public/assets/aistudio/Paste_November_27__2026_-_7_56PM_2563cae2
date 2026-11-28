@@ -1,0 +1,319 @@
+ESPECIFICACIÓN DE REQUISITOS DE SOFTWARE
+Plataforma web comercial y administración privada
+Luis & Oliver Bienes Raíces
+V1.0 — Revisión 02  |  27 de noviembre de 2026
+Candidata a validación comercial y técnica
+La primera versión debe permitir descubrir propiedades, contactar a la agencia y captar propietarios; el equipo debe administrar el inventario sin modificar código. La evolución hacia LOOS no condiciona el lanzamiento.
+CONTROL DOCUMENTAL
+Responsabilidad	Responsable
+Dirección comercial	Oliver
+Dirección financiera	Luis
+Responsable técnico y desarrollo	Fivel
+Titular del proyecto	Luis & Oliver Bienes Raíces
+Documento de trabajo interno. Sustituye a R01 únicamente tras validación de la dirección y del responsable técnico. No representa una aprobación, contrato firmado ni certificación ISO.
+Documentos complementarios: Anexo visual UX/UI R02 y matriz de aceptación integrada en cada requisito. La hoja de ruta evolutiva figura en el capítulo 15.
+Contenido
+Capítulos	Páginas
+01–04 · Alcance, diseño, catálogo y tarjetas	2–5
+05–08 · Filtros, mapa, contacto y captación	6–9
+09–12 · Administración, datos y analítica	10–13
+13–16 · Calidad, validación, evolución y cambios	14–17
+ 
+01 / CONTROL
+Alcance y autoridad documental
+La dirección define el resultado comercial y aprueba cambios de alcance; Fivel selecciona arquitectura, tecnologías, hosting, base de datos, cartografía y estrategia de pruebas. Las propuestas de implementación no constituyen obligaciones hasta su validación. No se fija presupuesto ni calendario de entrega en este SRS.
+Clave	Significado
+P0	Obligatorio para aceptar V1. Todos los requisitos numerados son P0 salvo indicación explícita.
+P1	Evaluar costo, esfuerzo y viabilidad; solo se incorpora con acuerdo. No bloquea V1.
+P2	Evolución futura, sin obligación de programarla ahora.
+Fuentes y precedencia
+Referencia	Uso
+C	Conversación y decisiones explícitas de dirección: rondas de landing, catálogo, mapa, administración y correcciones. Prevalecen las más recientes.
+R01	Documento Word recibido: SRS V1.0 — Revisión 01, capítulos 1–25. Base revisada, no autoridad superior a C.
+M	Seis mockups de landing, catálogo y panel. Referencias visuales, no autorización de funciones adicionales.
+A	Auditorías e instrucciones de corrección (fuentes 00–04, según lo compartido). No se presume haber leído el cuaderno completo de NotebookLM.
+Trazabilidad: cada requisito identifica su origen C/R01/M y, cuando corresponde, su capítulo. Los criterios de aceptación son verificaciones propuestas para validar el comportamiento, no afirmaciones de que el software ya existe. Las precisiones no aprobadas se registran en el capítulo 14.
+Objetivo de V1
+Captar propietarios, obtener contactos de compradores y arrendatarios, reducir trabajo operativo y proteger datos/captaciones. No exige cuentas de clientes, agenda, CRM completo, IA, pagos, remates ni páginas individuales de inmuebles.
+
+ 
+02 / DISEÑO
+Identidad visual y navegación
+Referencias M01–M04 del anexo · R01 capítulos 6–8
+REQ-UI-001  |  Sistema visual unificado
+La estética del landing prevalece sobre diferencias de los mockups: fondos marfil cálidos, carbón, arena mate, fotografía arquitectónica natural, espacios amplios, sombras discretas, iconos de una familia y logotipo tipográfico proporcionado. Una misma familia tipográfica para escritorio y móvil. Zona: icono rojo; Precio: verde; Tipo: realce cromático sobrio. Otros iconos preferentemente lineales. Sin anuncios intrusivos, vibración, sonido automático ni ventanas comerciales no solicitadas.
+Aceptación: Comparar las cuatro vistas públicas y el panel; confirmar jerarquías coherentes, contraste, botones accesibles y ausencia de elementos intrusivos. No se exige porcentaje fijo de blanco ni proporción única de fotografías. La paleta de R01 (#F5F3EF, #E9E6E0, #A39480, #39352F, #252725) es referencia ajustable al landing.  ·  Fuente: C · M · R01 §6
+REQ-NAV-001  |  Encabezados y navegación
+Landing escritorio: logo, Propiedades, Vender, Contáctanos; encabezado compacto fijo al bajar y hero recuperado al volver arriba. Landing móvil: logo y hamburguesa, menú de pantalla completa con X; cierra al seleccionar. Catálogo escritorio: encabezado delgado con menú completo; móvil: logo y Vender, sin hamburguesa ni CTAs del hero. Logo vuelve al landing. Propiedades abre catálogo general. Vender y Contáctanos conducen a sus secciones del landing, desde cualquier página.
+Aceptación: Probar cada enlace, cierre del menú, desplazamiento y regreso al inicio en ambos formatos; no abrir pestañas para fichas. En móvil, Vender debe conducir al formulario accesible.  ·  Fuente: C · M · R01 §7
+REQ-LAN-001  |  Hero y acción comercial
+Fotografía fija configurable, elegancia arquitectónica con sensibilidad local de SLP. Escritorio sin eslogan central obligatorio (referencia: dos botones centrados). Móvil mantiene «Encuentra tu próxima propiedad» conforme al mockup. Quiero comprar y Quiero vender juntos, con igual jerarquía. Comprar desplaza al catálogo destacado; en móvil amplía de 3 a 6 si hay inventario. Vender salta al formulario.
+Aceptación: En escritorio verificar dos CTAs y ausencia de texto impuesto; en móvil verificar título, botones y seis resultados cuando existan, sin duplicar tarjetas.  ·  Fuente: C · M · R01 §8 corregido
+REQ-NAV-002  |  Continuidad de la experiencia
+Conservar filtros, orden, posición de scroll, cantidad cargada y conjunto de fichas abiertas al regresar desde WhatsApp u otros servicios externos, cuando el navegador lo permita y el inventario siga disponible. No requerir cuenta ni permisos invasivos.
+Aceptación: Abrir varias tarjetas, aplicar filtro y salir a WhatsApp; volver y comprobar recuperación de estado; una propiedad retirada no debe reaparecer como disponible.  ·  Fuente: C · A
+
+ 
+03 / CATÁLOGO
+Landing y catálogo general
+R01 capítulos 8–9 · comportamiento público
+REQ-LAN-002  |  Destacadas y carga incremental
+Destacadas disponibles seleccionadas por dirección; si hay más de las necesarias, ordenar por publicación más reciente; si faltan, completar con disponibles recientes. Sin destacadas manuales, usar disponibles recientes. Vendidas y rentadas quedan fuera de destacadas. En móvil: filtros rápidos Todas, Casa, Departamento, Terreno y acceso a Oficina, Local y Bodega mediante hoja inferior. Ver todas abre catálogo general.
+Aceptación: Con 4 destacadas y 8 disponibles no destacadas, completar hasta 9 en escritorio; probar orden reciente, filtro rápido y exclusión de cerradas.  ·  Fuente: C · R01 §8
+Vista	Inicial	Ver más	Regla
+Landing escritorio	9 / 3×3	+9	Tras 3 ampliaciones manuales, ofrecer también Ver catálogo completo.
+Landing móvil	3 / lista	+3	Comprar amplía a 6; después de 3 ampliaciones manuales, ofrecer catálogo completo.
+Catálogo escritorio	12 / 3 columnas	+12	Anexar, sin paginación por números.
+Catálogo móvil	12 / lista	+12	Anexar, sin cambiar de página.
+Las cantidades son máximos por lote, no mínimos ficticios. Si quedan menos registros, mostrar los restantes. Al agotar inventario, no repetir como si fueran nuevos: ocultar/desactivar Ver más o mostrar fin de resultados de forma discreta. Mantener catálogo navegable y CTA de contacto.
+REQ-CAT-001  |  Carga progresiva
+Aplicar la matriz anterior; filtros u orden actualizados reinician el conjunto de resultados, sin duplicados y sin mezclar resultados de búsquedas anteriores. Se mantiene la navegación en la misma página.
+Aceptación: Con 26 registros coincidentes: 12, 12 y 2; el siguiente lote no duplica. Con 0, activar estado vacío.  ·  Fuente: C · R01 §9
+REQ-CAT-003  |  Disponibilidad y estados visibles
+Las fichas publicadas muestran precio real, tipo y estado comercial pertinente. Vendida/Rentada solo si dirección autoriza, con etiqueta discreta y sin presentarlas como disponibles; Apartada/En negociación según visibilidad autorizada, con invitación a consultar otras oportunidades. Exclusividad es dato interno.
+Aceptación: Cambiar estados y verificar catálogo, mapa y destacados; una cerrada no aparece como oferta disponible. Recomendaciones automáticas de similares: P1, no bloquean.  ·  Fuente: C · R01 §9,16
+
+ 
+04 / CATÁLOGO
+Tarjetas, galerías y favoritos
+R01 capítulos 9–10 · interacción y conversión
+REQ-CAT-002  |  Expansión dentro del catálogo
+Tocar tarjeta o flecha inferior abre/cierra información en el mismo lugar; varias tarjetas abiertas permanecen así hasta contraerlas. Escritorio: tres columnas de fotografías grandes, expansión distinguible; móvil: formato compacto tipo Instagram, foto, título, precio, atributos y acción. Descripción concisa de hasta tres líneas visibles en expansión. WhatsApp y Llamar accesibles; sin páginas individuales ni pestañas.
+Aceptación: Abrir diez fichas, cerrar una; las otras nueve siguen abiertas. Galería, favorito y contacto no alteran el estado de expansión.  ·  Fuente: C · M · R01 §9
+Tipo	Datos públicos de tarjeta / expansión
+Todos	Título, zona, precio MXN, operación, fotografía, estado cuando aplique.
+Casa / departamento	Recámaras, baños, m²; estacionamientos y superficies de terreno/construcción donde correspondan y se conozcan.
+Terreno	m² de terreno. Sin recámaras ni baños ficticios.
+Local / oficina / bodega	m² útiles o totales; construcción, espacios y estacionamientos cuando correspondan. Altura libre es dato opcional si resulta pertinente.
+La ficha no muestra ceros como sustituto de información desconocida. Mantener consistencia entre inmuebles de un mismo tipo.
+REQ-GAL-001  |  Galería y controles independientes
+Flechas laterales dentro de la imagen, sin fila adicional; permiten avanzar o retroceder fotografías. Corazón arriba a la derecha. Clic o toque en flechas/corazón/contacto no abre ni cierra la ficha. Si solo hay una foto, no mostrar controles inútiles.
+Aceptación: Recorrer galería y favoritos en tarjeta abierta y cerrada; comprobar que no se altera la posición ni se dispara otro botón.  ·  Fuente: C · M · R01 §10
+REQ-FAV-001  |  Favoritos locales
+Corazón rojo al marcar, animación breve, sin sonido/vibración ni aviso invasivo. Al desmarcar vuelve al estado original. Persistencia local sin cuenta en el mismo navegador, sujeta a disponibilidad de almacenamiento; registrar eventos de marcado/desmarcado sin identificación personal.
+Aceptación: Marcar, recargar, regresar, desmarcar; comprobar estado y eventos de ambas acciones. Si almacenamiento no está disponible, la navegación sigue funcionando.  ·  Fuente: C · R01 §10
+
+ 
+05 / BÚSQUEDA
+Filtros y ordenamiento
+R01 capítulo 11 · criterios funcionales
+REQ-FIL-001  |  Filtros completos y selección múltiple
+Catálogo: Zona, Precio, Tipo de propiedad, Recámaras, Baños, Venta/Renta. Este último despliega Venta, Renta y Preventa como opciones independientes. Selección múltiple en las categorías que lo permitan; coincidencia de cualquiera dentro de la misma categoría y todas las categorías activas entre sí. Recámaras y baños se interpretan como mínimos. Móvil: chips horizontales desplazables y hojas inferiores; escritorio: menús discretos.
+Aceptación: Elegir dos zonas y dos tipos; verificar intersección entre categorías y unión dentro de cada una. Seleccionar 3 recámaras y comprobar que 4 o 5 también califican. Probar preventa sola y con venta/renta.  ·  Fuente: C · R01 §11 corregido
+REQ-FIL-003  |  Precio por modalidad
+Sin selección inicial, mostrar inventario combinado con preferencia comercial de venta en destacados, sin excluir renta o preventa ni segmentos comerciales/industriales. Renta en MXN/mes, venta y preventa en MXN total. Cuando ambas modalidades se seleccionen, permitir rangos diferenciados para evitar comparar magnitudes incompatibles. Límites iniciales deben poder ajustarse razonablemente al inventario sin impedir buscar fuera de él.
+Aceptación: Probar renta de $10,000 mensuales y venta de $3,000,000 con rangos independientes; cambiar modalidad no debe convertir el importe mensual en precio de venta.  ·  Fuente: C · R01 §11
+REQ-FIL-002  |  Orden y estado vacío
+Opciones: Más reciente (por publicación, por defecto), Mayor precio y Menor precio. Si no hay coincidencias: «Por el momento no tenemos propiedades que coincidan con tu búsqueda». Ofrecer modificar/restablecer filtros y contactar a la agencia. Sin sugerencias ficticias.
+Aceptación: Verificar orden cronológico y monetario dentro de cada modalidad, y estado vacío con los dos controles funcionales.  ·  Fuente: C · R01 §11
+Precisiones a validar: tratamiento de orden de precio cuando coexisten renta y venta (propuesta: agrupar por modalidad y ordenar dentro de cada grupo); límites e incrementos del slider; orden de prioridad de venta en resultados generales. No imponer rangos arbitrarios como condición contractual.
+
+ 
+06 / MAPA
+Cartografía real y privacidad
+R01 capítulo 12 · M03–M04
+REQ-MAP-001  |  Mapa 2D y sincronización
+Usar cartografía geográfica real de San Luis Potosí, no recreación del mockup. Zoom y arrastre; iconos por tipología con estilo sobrio; evitar saturación al alejarse con agrupación o simplificación. Seleccionar marcador: rojo, leve realce y zona aproximada resaltada; desplazar al catálogo y expandir ficha con contactos. Actualizar resultados de forma controlada al mover el mapa, respetando filtros activos. Control discreto Ocultar/Mostrar mapa conserva filtros y catálogo.
+Aceptación: Mover y ampliar el mapa; comprobar calles reales, ausencia de solapamientos excesivos, correspondencia entre filtros, marcadores y fichas. Seleccionar un inmueble fuera del lote cargado debe poder revelar su ficha sin perder las abiertas. Ocultar/mostrar conserva estado.  ·  Fuente: C · M · R01 §12
+REQ-MAP-002  |  Ubicación privada y representación pública
+Separar ubicación exacta privada de ubicación o zona aproximada pública. La zona pública debe ser suficientemente amplia e independiente: no publicar círculos centrados en coordenadas privadas, ni permitir reconstruir el domicilio con datos, imágenes, metadatos, respuestas API o archivos públicos. La dirección exacta jamás se transmite al visitante. La implementación, precisión y método de representación corresponden a Fivel y la dirección valida su protección comercial.
+Aceptación: Inspeccionar respuestas públicas, HTML, medios, mapas y distintos niveles de zoom; no hallar dirección o coordenadas privadas. Comparar una zona pública con el registro privado sin revelar el punto exacto.  ·  Fuente: C · A · R01 §12 corregido
+V1 no requiere cartografía propia, polígonos exactos de colonias, pantalla completa del mapa ni mini tarjetas sobre marcadores. El proveedor y los costos de mapas se validarán antes del despliegue. El catálogo debe funcionar si el mapa no está disponible.
+
+ 
+07 / CONTACTO
+Canales y captación de propietarios
+R01 capítulos 13–14
+Canal	Dato oficial
+WhatsApp / Llamar	+52 444 369 7826
+Correo	LuisyOliverBienesRaices@gmail.com
+Ubicación	https://maps.app.goo.gl/34vJwSYzFnU37WbA7
+REQ-CON-001  |  WhatsApp contextual
+Cada inmueble genera mensaje dinámico desde sus datos aprobados: «Hola, quisiera obtener más información sobre [título], $[precio] MXN. Folio: [folio]». Indicar mensualidad en renta. Los enlaces genéricos usan el número oficial y mensaje contextual cuando aplique. Vista previa de imagen mediante enlace es P1, no garantizada por WhatsApp.
+Aceptación: Cambiar precio de un inmueble y aprobar; abrir WhatsApp desde dos fichas y confirmar título, monto y folio correctos. No afirmar que el mensaje fue enviado.  ·  Fuente: C · R01 §13
+REQ-CON-002  |  Llamada directa
+Llamar abre el marcador o aplicación disponible del dispositivo con el número oficial, y registra el clic asociado al folio si existe. No identifica al interlocutor ni confirma llamada. En dispositivos sin aplicación compatible, permitir consultar/copiar el número.
+Aceptación: Accionar Llamar desde dos propiedades y verificar destino y eventos diferenciados.  ·  Fuente: C · R01 §13
+REQ-CON-003  |  Contacto general
+Al final del landing y catálogo ofrecer WhatsApp, Llamar, Correo y Ubicación; sin barra flotante comercial. Correo abre aplicación de email; Ubicación abre el perfil oficial de Maps. Contáctanos conduce a la sección correspondiente.
+Aceptación: Comprobar los cuatro destinos en móvil y escritorio y que no haya controles flotantes no solicitados.  ·  Fuente: C · M
+REQ-CAP-001  |  Formulario de cinco datos
+Nombre, teléfono del propietario, zona libre, tipo de inmueble seleccionable, precio aproximado mediante slider con monto exacto opcional y formato MXN. En móvil aparece tarjeta Quiero vender mi propiedad / Iniciar registro; al tocar, desplegar formulario adaptado. Teclado apropiado al teléfono sin bloquear el avance. Aviso de privacidad visible.
+Aceptación: Completar y corregir datos en ambas vistas; probar teléfono inválido, selección faltante, valor manual y sincronización con el slider. Mantener lo escrito al corregir errores.  ·  Fuente: C · R01 §14
+
+ 
+08 / CAPTACIÓN
+Registro, confirmación y seguimiento
+REQ-CAP-002  |  Solicitud durable y notificación
+Guardar primero en base de datos y asignar folio permanente único (ej. CAP-2026-0001). Mostrar confirmación únicamente tras guardado; enviar notificación al correo general y ofrecer botón de WhatsApp con «Hola, he llenado el formulario. Quiero vender mi propiedad.»; folio puede acompañar el mensaje para localizar la solicitud. Si correo falla, conservar lead, permitir reintento o advertencia interna.
+Aceptación: Simular fallo de correo: lead visible en panel y folio intacto. Simular fallo de guardado: no presentar éxito, mantener entradas y permitir reintentar. Doble envío accidental no crea duplicados por el mismo intento.  ·  Fuente: C · R01 §14,22
+REQ-ADM-005  |  Módulo Solicitudes
+Bandeja privada de propietarios interesados: folio, nombre, teléfono, zona, tipo, precio, fecha y estado de atención. Consultar detalle y actualizar seguimiento básico; estados propuestos por R01: Nuevo, En contacto, Atendido y Descartado. Conservar historial y acceso a datos para asesores autorizados. Sin CRM avanzado ni asignación algorítmica.
+Aceptación: Enviar formulario, encontrarlo por folio, consultar datos como asesor, actualizar estado y recargar; visitante no puede consultar registros ni archivos privados.  ·  Fuente: C · R01 §18 (requisito recuperado)
+Integración condicionada P1
+REQ-CAP-003 (P1): evaluar envío automático de notificación al WhatsApp general +52 444 369 7826, preferentemente desde un mismo remitente/conversación operativa, con datos del lead, folio y sugerencia de seguimiento. Requiere evaluar cuenta remitente, permisos, reglas de proveedor, costos y mantenimiento. No sustituye correo ni persistencia. Si no resulta viable, lanzar con correo + panel.
+Aceptación si se incorpora: dos solicitudes aparecen como dos notificaciones en el canal acordado, sin necesidad de que el propietario abra WhatsApp. Simular fallo del proveedor sin perder registros.
+Datos de una solicitud
+Público (entrada)	Privado (operación)
+Nombre, teléfono, zona, tipo, monto	Folio, fecha, estado, seguimiento y eventual asesor asignado. No exponer datos a visitantes.
+La asignación automática de leads por especialidad y desempeño del asesor queda para V2/LOOS.
+
+ 
+09 / ADMINISTRACIÓN
+Panel privado y permisos
+R01 capítulos 5, 15–16 · M05–M06
+REQ-ADM-001  |  Cinco módulos
+Dashboard, Propiedades, Solicitudes, Equipo y Configuración. El calendario, widget de citas y valores de ejemplo del mockup no se implementan en V1. Mostrar datos reales, cero o sin datos según corresponda.
+Aceptación: Entrar a cada módulo autorizado desde el panel; confirmar que no hay calendario ni cifras ficticias.  ·  Fuente: C · M · R01 §15
+REQ-ADM-007 / 008  |  Panel responsive y navegación
+Escritorio con navegación lateral y móvil con barra inferior de cinco accesos según permisos. Aplicar identidad sobria del landing y componentes estándar cuando faciliten desarrollo. La ilustración arquitectónica es referencia, no bloqueo de lanzamiento.
+Aceptación: Usar panel a distintos anchos; acceder a tareas autorizadas sin desbordes ni controles cortados.  ·  Fuente: C · M · R01 §15
+Operación	Dirección	Asesor	Público
+Consultar inventario y datos privados autorizados	Sí	Sí	No
+Crear/editar borradores y fotos; vista previa	Sí	Sí	No
+Aprobar publicación o cambios públicos	Sí	No	No
+Consultar/editar comisiones	Sí	No	No
+Gestionar solicitudes	Sí	Sí	No
+Gestionar cuentas, permisos y configuración	Sí	No	No
+Navegar catálogo y enviar formulario	Sí	Sí	Sí
+La dirección incluye a Luis y Oliver: ambos acceden a comisiones. El alcance de estadísticas para asesores y cambios de estado que afecten visibilidad se validará según la matriz propuesta del capítulo 14. La autorización debe aplicarse en servidor, no solo ocultando botones.
+REQ-ADM-006  |  Módulo Equipo
+Cuentas individuales de dirección y asesores. Dirección crea, desactiva y administra roles; nadie comparte credenciales. Un usuario desactivado pierde acceso; recuperar credenciales mediante mecanismo seguro definido por Fivel.
+Aceptación: Crear asesor, iniciar sesión, verificar restricciones, desactivar y comprobar bloqueo de nuevas peticiones y sesiones vigentes conforme al mecanismo elegido.  ·  Fuente: C · R01 §5,15,18
+
+ 
+10 / ADMINISTRACIÓN
+Inventario y aprobación
+REQ-ADM-002  |  Ciclo de vida y control
+Alta, edición, activación, desactivación, orden y archivo desde panel, sin tocar código. Folio permanente (ej. LOBR-2026-0042) inmutable. Destacada es prioridad comercial, compatible con estado disponible; no duplicar registros. No borrar físicamente inmuebles mediante operación normal.
+Aceptación: Crear, cambiar título/precio/estado, archivar y consultar historial; comprobar que folio no cambia y archivo no aparece públicamente.  ·  Fuente: C · R01 §16,18
+Estado	Visibilidad
+Borrador	No visible.
+Disponible	Visible tras aprobación.
+Destacada	Disponible, prioridad en landing.
+En negociación / Apartada	Según decisión de dirección; etiqueta si visible.
+Vendida / Rentada	Solo si dirección autoriza; etiqueta elegante, fuera de destacados disponibles.
+Retirada / Archivada	No visible; conservar historial.
+REQ-ADM-003  |  Aprobación y edición publicada
+Asesores preparan borradores; solo Luis u Oliver aprueban publicación y cambios públicos. Editar una propiedad publicada no debe sustituir su versión pública por contenido no aprobado. Fivel define mecanismo de revisión; no se exige Draft_Delta_JSON ni formato de almacenamiento.
+Aceptación: Asesor modifica precio y fotos de inmueble publicado: versión pública sigue anterior hasta aprobación. Aprobar con cuenta de dirección y comprobar actualización en catálogo/mapa. Rechazar acceso directo de asesor.  ·  Fuente: C · R01 §16
+REQ-ADM-004  |  Fotografías y vista previa
+Carga simultánea, reordenamiento por arrastre o alternativa accesible, elegir portada, optimizar para web con calidad alta y eliminar metadatos sensibles. Las fotos se suben ya editadas y con marca de agua manual. Vista previa escritorio/móvil antes de publicar obligatoria; no exige editor de imágenes ni simulador complejo.
+Aceptación: Subir varias fotos, ordenar, cambiar portada y comprobar ambas vistas; verificar que archivos públicos no contienen GPS/EXIF sensible y que un borrador no se puede acceder por URL pública.  ·  Fuente: C · R01 §16
+
+ 
+11 / ADMINISTRACIÓN
+Configuración y modelo de información
+REQ-ADM-009  |  Módulo Configuración
+Dirección modifica fotografía principal del hero, textos comerciales, selección de destacadas y orden fotográfico (este último puede estar en Propiedades). No debe requerir cambios de código. Los datos de contacto oficiales permanecen consistentes; edición adicional de teléfono, correo, Maps o rangos de precio desde panel es decisión pendiente, no obligación de V1.
+Aceptación: Cambiar foto/texto, seleccionar destacadas y ordenar fotos; verificar web pública sin despliegue de código y que asesor no puede modificar configuración general.  ·  Fuente: C · R01 §15 (recuperado)
+REQ-DAT-001  |  Modelo conceptual y folios
+Mantener identificadores únicos e inmutables para propiedades, solicitudes y relaciones; separar información pública y privada; permitir evolución a LOOS sin exigir CRM ni infraestructura compleja ahora. El folio visible no tiene que ser clave primaria de base de datos.
+Aceptación: Editar precio y zona, relacionar evento y solicitud con su identificador cuando corresponda; comprobar estabilidad y exportación/recuperación de registros.  ·  Fuente: C · R01 §18
+Entidad	Información mínima conceptual
+Propiedad	Folio, título, tipo de inmueble, operación (venta/renta/preventa), precio y periodicidad, zona pública, ubicación pública aproximada, dirección/ubicación privada, atributos por tipo, descripción, estado, destacada, visibilidad, fechas de creación/publicación, propietario/contacto privado, exclusividad interna, comisión restringida.
+Fotografía	Identificador, vínculo a propiedad, imagen, orden, portada, visibilidad según revisión.
+Solicitud	Folio, cinco datos del formulario, fecha, estado, historial básico; vínculo a asesor si se incorpora manualmente.
+Usuario	Identificador, nombre, acceso seguro, rol, estado activo.
+Evento analítico	Tipo, fecha, folio si aplica, filtros y valores pertinentes, modalidad, origen y dispositivo cuando disponible, sin datos personales innecesarios.
+Configuración	Hero y textos editables; preferencias de presentación autorizadas.
+Modelo lógico, no esquema físico. Tipos de datos, tablas, APIs y servicios son responsabilidad técnica. No se obliga a almacenar coordenadas privadas cuando una dirección interna resulte suficiente para la operación acordada.
+
+ 
+12 / ANALÍTICA
+Dashboard y medición comercial
+R01 capítulo 17 · once indicadores obligatorios
+REQ-ANA-001  |  Registro y consulta
+Dashboard presenta los once indicadores con datos reales y comparación semanal/mensual. Cada evento se contabiliza según su definición; registrar clics, filtros aplicados y solicitudes exitosas. El diseño visual puede simplificarse sin omitir métricas.
+Aceptación: Con un conjunto de eventos de prueba conocido, verificar cada conteo y periodo. Cuando no exista histórico suficiente o base anterior cero, indicar sin comparación en lugar de porcentaje inventado.  ·  Fuente: C · R01 §17
+Indicador	Definición operativa / prueba
+1. Visitas al sitio	Carga/navegación de landing o catálogo; no usuarios únicos. Probar dos visitas.
+2. Visitas por propiedad	Apertura de ficha por folio; no simple impresión ni tiempo de lectura.
+3. Favoritos	Registrar marcado y desmarcado; ranking por marcados, diferenciando ambas acciones. No equivale a personas únicas.
+4. WhatsApp por propiedad	Clic en enlace contextual por folio; no mensaje enviado.
+5. Llamar por propiedad	Clic de intención telefónica por folio; no llamada efectiva.
+6. Solicitudes	Registros persistidos, no intentos fallidos.
+7. Zonas buscadas	Zonas de filtros aplicados, no inferir domicilio del visitante.
+8. Rangos de precio	Rangos aplicados, distinguiendo renta y venta/preventa. No presupuesto verificado.
+9. Origen de tráfico	Referente/parámetros de campaña disponibles; directo/desconocido cuando no se puede determinar.
+10. Comparaciones	Periodos equivalentes semanal y mensual; variación contra periodo anterior con reglas claras.
+11. Filtros usados	Frecuencia de aplicación por categoría, no cada movimiento del slider.
+REQ-ANA-002  |  Intención no es conversión
+No presentar clics como conversaciones, citas o ventas; no mostrar cifras de mockups. Sin cuentas públicas, las estadísticas no identifican compradores individuales.
+Aceptación: Generar clic de WhatsApp sin enviar mensaje y clic de llamada sin llamar; solo aumentan los contadores de intención.  ·  Fuente: C · R01 §17
+
+ 
+13 / CALIDAD
+Seguridad, privacidad y operación
+REQ-SEC-001  |  Accesos y separación de datos
+HTTPS obligatorio; autenticación segura y permisos verificados en servidor para cada operación privada. No exponer dirección, ubicación exacta, propietarios, comisiones, exclusividad, documentos internos, borradores ni medios privados en respuestas públicas. Proteger credenciales y secretos, validar entradas y limitar abuso del formulario.
+Aceptación: Intentar acceso público a API, archivos y borradores; probar acceso de asesor a comisiones y operación de publicación. Verificar rechazo sin fuga de datos.  ·  Fuente: C · R01 §20
+REQ-SEC-002  |  Privacidad y recuperación
+Aviso de privacidad visible en captación. Minimizar datos analíticos, evitar identificadores personales innecesarios y no considerar un hash de IP como garantía de anonimato. Fivel define conservación, acceso y medidas técnicas; dirección valida tratamiento de datos. Respaldos de inventario, solicitudes, usuarios/configuración y archivos necesarios; procedimiento de restauración documentado y probado.
+Aceptación: Verificar aviso y datos públicos; realizar restauración de prueba de registros y medios. Confirmar que errores y analítica no revelan datos privados.  ·  Fuente: C · A
+REQ-OPS-001  |  Titularidad y transferencia operativa
+Agencia controla cuentas de dominio, hosting, repositorio y servicios contratados, código propio y acceso a datos; respetar licencias de terceros. Fivel conserva acceso técnico autorizado. Documentar despliegue, respaldo, credenciales seguras, actualización y operación del panel.
+Aceptación: Dirección verifica accesos propios, recuperación de cuenta y documentación; Fivel demuestra despliegue y restauración sin depender de una cuenta personal ajena a la agencia.  ·  Fuente: C · R01 §20
+RNF-001–004  |  Rendimiento, respuesta y accesibilidad
+Interfaz responsive, usable desde pantallas pequeñas y escritorio, fotos optimizadas y carga incremental; mapa fluido y controles legibles/táctiles. Objetivos orientativos R01: FCP <2 s, carga adicional <500 ms y mapa hasta 60 fps en condiciones adecuadas; no son umbrales contractuales aprobados ni garantizados para toda red/dispositivo. Fivel propone condiciones, métricas y umbrales de aceptación antes de estimar.
+Aceptación: Probar móviles y escritorio representativos, navegación por teclado, errores, red lenta y carga de inventario. Medir y documentar resultados con entorno acordado; evitar pantallas bloqueadas.  ·  Fuente: C · R01 §19 corregido
+
+ 
+14 / VALIDACIÓN
+Escenarios de error y decisiones pendientes
+Caso	Resultado esperado
+ERR-001 · Red/formulario	Conservar entradas durante reintento, sin éxito falso. No almacenar datos personales indefinidamente en navegador.
+ERR-002 · Correo	Lead persistido; confirmación válida; incidencia/reintento interno.
+ERR-003 · Sin coincidencias	Estado vacío y opciones de ajustar filtros o contactar.
+ERR-004 · Mapa no disponible	Aviso discreto; catálogo, filtros y contactos operativos.
+ERR-005 · Inventario agotado	Lote parcial; no duplicados como nuevos.
+ERR-006 · Sesión/permisos	Denegar acceso y permitir autenticación segura; no filtrar información.
+ERR-007 · Carga de fotos	Avisar archivo inválido/fallo, conservar trabajo ya guardado y permitir reintento.
+ERR-008 · Retirada concurrente	No presentar como disponible al actualizar/restaurar; mostrar estado vigente.
+Decisiones por validar, sin ampliar alcance
+Decisión	Responsable / propuesta
+Rangos del precio y orden mixto	Dirección + Fivel; definir escalas, incrementos y agrupación de renta/venta.
+Permisos finos y estados	Dirección; propuesta: asesores preparan cambios de visibilidad; dirección aprueba. Dashboard global para dirección y acceso operativo a asesores por validar.
+Mapa aproximado	Fivel propone método, dirección valida nivel de privacidad; no radio fijo obligatorio.
+Métricas de rendimiento y soporte	Fivel propone pruebas, dispositivos, objetivos y volumen de inventario.
+Configuración adicional / P1	Dirección autoriza edición de datos de contacto, rangos o recomendaciones si conviene; Fivel estima WhatsApp servidor y miniaturas.
+Infraestructura y respaldo	Fivel propone stack, proveedor, frecuencia de respaldo, retención y recuperación; dirección aprueba costos.
+Estas precisiones requieren acuerdo donde corresponda; no constituyen autorización para demorar el desarrollo de los componentes ya definidos.
+
+ 
+15 / EVOLUCIÓN
+Entrega, pruebas y hoja de ruta
+Secuencia de trabajo propuesta (sin fechas impuestas)
+Hito	Demostración de salida
+1. Base y acceso	Infraestructura acordada, cuentas de agencia, modelo de datos, permisos y protección.
+2. Administración	Alta/edición, aprobación, fotos, vista previa, estados, solicitudes, equipo y configuración.
+3. Web pública	Landing, catálogo responsive, filtros, expansión, favoritos y contacto con datos reales.
+4. Mapa y captación	Cartografía real, privacidad, sincronización, formulario persistente y correo.
+5. Medición y pruebas	11 KPIs, contingencias, respaldo/restauración, pruebas cruzadas y validación comercial.
+La secuencia es orientativa; Fivel puede paralelizar, reorganizar o reutilizar componentes. Antes de producción, verificar todos los P0 y errores críticos de privacidad/datos; cualquier excepción debe quedar documentada y aprobada. Las pruebas de este documento son la matriz base, no resultados ya ejecutados.
+P1 — Solo si costo y tiempo lo permiten
+Notificación automática de solicitudes a WhatsApp; miniatura de propiedad en mensaje mediante enlace cuando el proveedor lo permita; recomendaciones simples de similares para apartadas/en negociación. No son bloqueadores.
+P2 — Evolución de plataforma y LOOS
+Cuentas públicas, favoritos sincronizados, perfiles y citas; CRM de propietarios/compradores, matching, asignación inteligente de leads, analítica avanzada y ranking personalizado; WhatsApp conversacional, agenda, telefonía/VoIP y guiones comerciales; expedientes, brokers, valuadores, notaría, créditos, impuestos, apartados/pagos y remates como iniciativas posteriores. Páginas o enlaces compartibles por propiedad, contenidos educativos, testimonios y edición fotográfica/IA o marca de agua automática se evalúan posteriormente. No se requiere PWA.
+Principio: construir V1 para generar contactos, aprender y operar; dejar interfaces y datos evolucionables, sin implementar módulos futuros anticipadamente.
+
+ 
+16 / CONTROL
+Registro de cambios R01 → R02
+R01 / tema	Corrección R02
+§6,8 / Hero y diseño	Recupera hero desktop sin eslogan, título móvil, paleta del landing; elimina 45% blanco y relación 1:1.5 obligatorios.
+§7–11 / Navegación	Recupera filtros rápidos, formulario móvil, persistencia, carga parcial, controles y estado vacío. Hash y endpoints no se imponen; enlaces compartibles futuros salvo aprobación posterior.
+§11,18 / Preventa	Categoría seleccionable y persistente; rangos por modalidad; criterios de orden mixto pendientes.
+§12 / Cartografía	Ubicación pública independiente, control de saturación, actualización por mapa; radio editable no impuesto.
+§13–14 / Contacto	Cuatro canales, mensaje dinámico, folio, resiliencia y WhatsApp P1.
+§15–16 / Administración	Recupera Solicitudes, Equipo y Configuración; comisiones solo dirección; estados con visibilidad aprobada, sin calendario.
+§16,18 / Datos	Recupera datos de propietario, exclusividad interna, fecha de publicación y operación preventa; implementación física a Fivel.
+§17 / Analítica	11 indicadores verificables; diferencia clic de conversión, eventos de favorito separados y rangos por modalidad.
+§19–23 / Calidad	Objetivos técnicos no impuestos, respaldo/restauración, privacidad y casos de error; aprobación aún pendiente.
+Validación de la revisión
+La Revisión 02 se propone como base para estimación y desarrollo. No declara que Luis, Oliver o Fivel hayan firmado o aprobado esta redacción. Tras su revisión, registrar acuerdos, costo, hitos, excepciones y versión de referencia.
+Responsable	Validación / fecha
+Oliver — Dirección comercial	________________________________
+Luis — Dirección financiera	________________________________
+Fivel — Responsable técnico	________________________________
+Fin de la especificación.
